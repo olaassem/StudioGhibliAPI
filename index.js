@@ -42,10 +42,10 @@ function displayAllFilms( data ){
 	let html = "";
 
 	let output = data.map( function( item ) {
-		return `<li>${item.title}</li>`;
+		return `<div class="js-film-container"> <h3>${item.title}</h3><p>${item.description}</p></div>`;
 		} ).join('\n');
 
-	$('.js-results').html( '<ul>' + output + '</ul>');
+	$('.js-results').html( `<div> ${output} </div>`);
 }
 
 

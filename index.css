@@ -1,0 +1,9 @@
+*{
+	box-sizing: border-box;
+}
+
+.js-film-container{
+	border-radius: 5px;
+	border: grey 2px solid;
+	margin: 10px;
+}
