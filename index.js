@@ -4,7 +4,6 @@
 const studioGhibliEndpoint= 'https://ghibliapi.herokuapp.com/films'
 
 
-
 function implementSubmitButton(){
   $('.js-submit').on('click',function( event ){
   	event.preventDefault();
@@ -22,11 +21,11 @@ function getDataFromApi( searchTerm ) {
 	$.getJSON(studioGhibliEndpoint, params, function ( data,error ) {
 	//check data in console
 	console.log(data);
-	displayAllFilms();
+	displayAllFilms(data);
 	});
 }	
 
-
+/*
 function renderFilm( filmObject ){
 	return 
 		`<li>
@@ -34,16 +33,20 @@ function renderFilm( filmObject ){
 		</li>`;
 	console.log()
 }
+*/
 
 
 // gets raw data from API
 function displayAllFilms( data ){
+	
 	let html = "";
-	let output = data.map( renderFilm ).join('\n');
-	$('.js-results').html( '<ul>' + renderFilm + '</ul>' );
+
+	let output = data.map( function( item ) {
+		return `<li>${item.title}</li>`;
+		} ).join('\n');
+
+	$('.js-results').html( '<ul>' + output + '</ul>');
 }
-
-
 
 
 
