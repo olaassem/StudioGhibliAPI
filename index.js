@@ -3,6 +3,25 @@
 
 const studioGhibliEndpoint= 'https://ghibliapi.herokuapp.com/films'
 
+function getDataFromApi( searchTerm ) {
+	let params = {
+		q: searchTerm
+	};
+
+	$.getJSON(studioGhibliEndpoint, params, function ( data ) {
+		//check data in console
+		console.log(data);
+
+		//check if there is error
+		if(data.Error) {
+	      	alert(result.Error);
+	    } else {
+			displayAllFilms(data);
+		};
+	});	
+}
+
+
 
 function implementSubmitButton(){
   $('.js-submit').on('click',function( event ){
@@ -13,17 +32,6 @@ function implementSubmitButton(){
 }
 
 
-function getDataFromApi( searchTerm ) {
-	let params = {
-		q: searchTerm
-	};
-
-	$.getJSON(studioGhibliEndpoint, params, function ( data,error ) {
-	//check data in console
-	console.log(data);
-	displayAllFilms(data);
-	});
-}	
 
 /*
 function renderFilm( filmObject ){
@@ -40,11 +48,24 @@ function renderFilm( filmObject ){
 function displayAllFilms( data ){
 	
 	let html = "";
+	//declare output
+	let output;
 
-	let output = data.map( function( item ) {
-		return `<div class="js-film-container"> <h3>${item.title}</h3><p>${item.description}</p></div>`;
-		} ).join('\n');
-
+	//if no matches in data => output is "sorry..."
+	if( data.length === 0 ){
+			output = `<p>Sorry! No videos match your search.</p>`;
+		} 
+	//otherwise if there is data in the reponse...
+	else {
+	//map over arrays --> creates a new array with the anon function that is passed
+		output = data.map ( function ( item ){
+			return (   //JS expects when you click "return key" next to it - it wont return anything
+				`<div class="js-film-container"> 
+				<h3>${item.title}</h3>
+				<p>${item.description}</p>
+			</div>`);
+		}).join('\n');	
+	}
 	$('.js-results').html( `<div> ${output} </div>`);
 }
 
